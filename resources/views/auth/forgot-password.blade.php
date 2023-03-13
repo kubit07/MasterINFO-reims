@@ -10,10 +10,24 @@
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Forgot Password</h4>
-							<form method="POST" class="my-login-validation" novalidate="">
+
+							<div class="card-body">
+								@if (session('status'))
+									<div class="alert alert-success" role="alert">
+										{{ session('status') }}
+									</div>
+								@endif
+
+							<form method="POST" class="my-login-validation" novalidate="" action="{{ route('password.email') }}">
+								@csrf
 								<div class="form-group">
 									<label for="email">E-Mail Address</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+									<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" required autofocus>
+									@error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
 									<div class="invalid-feedback">
 										Email is invalid
 									</div>

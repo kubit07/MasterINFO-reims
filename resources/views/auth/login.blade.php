@@ -10,30 +10,43 @@
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Login</h4>
-							<form method="POST" class="my-login-validation" novalidate="">
+							<form method="POST" class="my-login-validation" novalidate="" action="{{ route('login') }}">
+
+								@csrf
+
 								<div class="form-group">
 									<label for="email">E-Mail Address</label>
-									<input id="email" type="email" class="form-control" name="email" value="" required autofocus>
-									<div class="invalid-feedback">
-										Email is invalid
-									</div>
+									<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+									  @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
 								</div>
 
 								<div class="form-group">
+									@if (Route::has('password.request'))
 									<label for="password">Password
-										<a href="forgot.html" class="float-right">
+										<a href="{{ route('password.request') }}" class="float-right">
 											Forgot Password?
 										</a>
 									</label>
-									<input id="password" type="password" class="form-control" name="password" required data-eye>
-								    <div class="invalid-feedback">
-								    	Password is required
-							    	</div>
+									@endif
+									<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password" required data-eye>
+
+								    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                	@enderror
+
 								</div>
 
 								<div class="form-group">
 									<div class="custom-checkbox custom-control">
-										<input type="checkbox" name="remember" id="remember" class="custom-control-input">
+										<input type="checkbox" name="remember" id="remember" {{old('remember') ? 'checked' : '' }} class="custom-control-input">
 										<label for="remember" class="custom-control-label">Remember Me</label>
 									</div>
 								</div>
@@ -44,7 +57,7 @@
 									</button>
 								</div>
 								<div class="mt-4 text-center">
-									Don't have an account? <a href="register.html">Create One</a>
+									Don't have an account? <a href="{{route("register")}}">Create One</a>
 								</div>
 							</form>
 						</div>

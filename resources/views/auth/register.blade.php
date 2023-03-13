@@ -10,18 +10,35 @@
 					<div class="card fat">
 						<div class="card-body">
 							<h4 class="card-title">Register</h4>
-							<form method="POST" class="my-login-validation" novalidate="">
+							<form method="POST" class="my-login-validation" action="{{ route('register') }}">
+
+                                @csrf
+                                
 								<div class="form-group">
 									<label for="name">Name</label>
-									<input id="name" type="text" class="form-control" name="name" required autofocus>
+									<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" required autofocus>
 									<div class="invalid-feedback">
 										What's your name?
 									</div>
+
+                                    @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+
 								</div>
 
 								<div class="form-group">
 									<label for="email">E-Mail Address</label>
-									<input id="email" type="email" class="form-control" name="email" required>
+									<input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                    @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                
 									<div class="invalid-feedback">
 										Your email is invalid
 									</div>
@@ -29,10 +46,23 @@
 
 								<div class="form-group">
 									<label for="password">Password</label>
-									<input id="password" type="password" class="form-control" name="password" required data-eye>
+									<input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required data-eye>
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+
 									<div class="invalid-feedback">
 										Password is required
 									</div>
+								</div>
+
+
+                                <div class="form-group">
+									<label for="password-confirm">Confirm Password</label>
+									<input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                    
 								</div>
 
 								<div class="form-group">
@@ -51,7 +81,7 @@
 									</button>
 								</div>
 								<div class="mt-4 text-center">
-									Already have an account? <a href="index.html">Login</a>
+									Already have an account? <a href="{{route("login")}}">Login</a>
 								</div>
 							</form>
 						</div>

@@ -14,8 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.index');
+    return view('auth.login');
 });
 
+Route::get('/home', function () {
+    return view('layouts.home');
+})->middleware('auth');
 
-Route::get('/home', [UserController::class, 'show']);
+
+//Route::get('/home', [UserController::class, 'show']);
