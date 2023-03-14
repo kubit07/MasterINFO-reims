@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 Route::get('/home', function () {
     return view('layouts.home');
-})->middleware('auth');
+})->middleware('auth')->name('home');
 
 
 //Route::get('/home', [UserController::class, 'show']);
