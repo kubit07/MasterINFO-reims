@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('entreprises', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('nom');
+            $table->unsignedBigInteger('etudiant_id');
+            $table->foreign('etudiant_id')->references('id')->on('etudiants')->onDelete('cascade');
+            $table->string('secteur_activite');
+            $table->string('description');
+            $table->string('technologie_utilisees');
         });
     }
 

@@ -14,6 +14,17 @@ return new class extends Migration
         Schema::create('etudiants', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('promotion');
+            $table->enum('niveau', ['Master1', 'Master2', 'Alumni']);
+            $table->mediumText('competences');
+            $table->string('cv')->nullable();
+            $table->string('emploi')->nullable();
+            $table->mediumText('description_emploi')->nullable();
+
+
+            
         });
     }
 
